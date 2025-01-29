@@ -11,6 +11,35 @@ class Enigma:
         self.reflector_map = reflector_map
         pass
 
+    def next_val_wheel1(current_value : int) -> int: return (current_value % 8) + 1 #FIXME make dis static
+
+    def next_val_wheel2(current_value : int,encrypted_characters : int) -> int: 
+        next_value = 0
+        if encrypted_characters % 10 == 0:
+            next_value = 10
+        elif encrypted_characters % 3 == 0:
+            next_value = 5
+        return next_value
+
+    def next_val_wheel3(current_value : int) -> int: 
+        return (current_value % 8) + 1
+
+    def update_wheels(self,encrypted_characters : int) -> None:
+        self.wheel1 = self.next_val_wheel1(self.wheel1)
+        self.wheel2 = self.next_val_wheel2(self.wheel2,encrypted_characters)
+        self.wheel3 = self.next_val_wheel3(self.wheel3,encrypted_characters)
+
+    def wheels_arithmetics(self) -> bool:
+        #TODO KOL HAKESEM HAZE - FUNCTION FROM 2 AND 7 SE I FIM
+        return
+    
+    def modulo_for_i(self,current_val_1 : int) -> int:
+        pass
+    
+    def next_val_i(self, current_val_1 : int) -> int: #FIXME SE I FIM 2 VE 3
+        #TODO - MATEMATICA
+        return
+        
 
 
 
