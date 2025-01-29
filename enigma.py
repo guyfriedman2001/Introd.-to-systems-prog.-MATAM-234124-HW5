@@ -25,9 +25,9 @@ class Enigma:
         self.wheel1 = wheels[WHEEL1_POSITION]
         self.wheel2 = wheels[WHEEL2_POSITION]
         self.wheel3 = wheels[WHEEL3_POSITION]
-        self._original_state_wheel1 = wheels[WHEEL1_POSITION]
-        self._original_state_wheel2 = wheels[WHEEL2_POSITION]
-        self._original_state_wheel3 = wheels[WHEEL3_POSITION]
+        self._original_state_wheel1 = self.wheel1
+        self._original_state_wheel2 = self.wheel2
+        self._original_state_wheel3 = self.wheel3
         self.reflector_map = reflector_map
         pass
 
