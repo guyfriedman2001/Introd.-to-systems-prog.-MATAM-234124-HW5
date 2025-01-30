@@ -108,8 +108,8 @@ def load_enigma_from_path(path):
         raise JSONFileException()
 
 class JSONFileException(Exception):
-    def __init__(self, message):
-        super().__init__(message)
+    def __init__(self):
+        super().__init__("The enigma script has encountered an error")
 
 if __name__ == "__main__":
     flags = ["-c", "-i", "-o"]
