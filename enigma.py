@@ -62,12 +62,6 @@ class Enigma:
     def calculate_special_formula(self) -> int: return (((make_double(self.wheel1))-self.wheel2+self.wheel3)%ALPHABET_SIZE)
 
     def special_formula_condition(self) -> bool: return not is_zero(self.calculate_special_formula())
-    
-    def next_val_i(self, current_val_i : int) -> int:
-        i_increment = 1
-        if self.special_formula_condition():
-            i_increment = self.calculate_special_formula()
-        return current_val_i + i_increment
         
     def reset_wheels(self) -> None:
         self.wheel1 = self._original_state_wheel1
