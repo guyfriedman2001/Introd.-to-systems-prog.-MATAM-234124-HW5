@@ -14,6 +14,8 @@ STATE1_WHEEL3 = 10
 STATE2_WHEEL3_CONDITION = 3
 STATE2_WHEEL3 = 5
 
+PLUS_OPERATION = 1
+MINUS_OPERATION = -1
 
 def is_even(number : int) -> bool: return number % 2 == 0
 def is_odd(number : int) -> bool: return not is_even(number)
@@ -61,42 +63,38 @@ class Enigma:
 
     def special_formula_condition(self) -> bool: return not is_zero(self.calculate_special_formula())
     
-    def modulo_for_i(self,current_val_i : int) -> int:
-        return current_val_i % ALPHABET_SIZE
-    
     def next_val_i(self, current_val_i : int) -> int:
         i_increment = 1
         if self.special_formula_condition():
             i_increment = self.calculate_special_formula()
         return current_val_i + i_increment
         
-
     def reset_wheels(self) -> None:
         self.wheel1 = self._original_state_wheel1
         self.wheel2 = self._original_state_wheel2
         self.wheel3 = self._original_state_wheel3
 
-    def calculate_char_encryption(self, char : str) -> str: return char #TODO
+    def cycle(self, char, operation) -> str:
+        i = self.hash_map[char]
+        temp_calculation = self.calculate_special_formula()
+        i += temp_calculation*operation if temp_calculation != 0 else operation
+        i = i % ALPHABET_SIZE
+        return [key for key, val in self.hash_map.items() if val == i][0]
 
     def encrypt(self, message : str) -> str:
         encrypted_message = ''
         encrypted_characters_counter = 0
         for char in message:
-            i = self.next_val_i(i)
-            i = self.modulo_for_i(i)
-            next_char = char
-            if 'a' <= char <= 'z':
-                next_char = self.calculate_char_encryption(char)
+            encrypted_char = char
+            if char in self.hash_map:
+                c1 = self.cycle(char, PLUS_OPERATION)
+                c2 = self.reflector_map[c1]
+                encrypted_char = self.cycle(c2, MINUS_OPERATION)
                 encrypted_characters_counter = increment(encrypted_characters_counter)
-            self.update_wheels()
-            encrypted_message += next_char
-
-        
+            encrypted_message += encrypted_char
+            self.update_wheels(encrypted_characters_counter)
         self.reset_wheels()
         return encrypted_message
-
-
-
 
 def load_enigma_from_path(path):
     try:
