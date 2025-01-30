@@ -112,3 +112,31 @@ def load_enigma_from_path(path):
 class JSONFileException(Exception):
     def __init__(self, message):
         super().__init__(message)
+
+if __name__ == "__main__":
+    flags = ["-c", "-i", "-o"]
+    try:
+        input_list = sys.argv[1:]
+        data = {}
+        check_invalid = False
+        for i in range(0, len(input_list), 2) :
+            if input_list[i] in flags :
+                data[input_list[i]] = input_list[i+1]
+            else:
+                check_invalid = True
+        if "-c" not in data or "-i" not in data or check_invalid:
+                print("Usage: python3 enigma.py -c <config_file> -i <input_file> -o <output_file>", file=sys.stderr)
+                exit(1)
+        config_file = data["-c"]
+        input_file = data["-i"]
+        output_file = data["-o"] if "-o" in data else sys.stdout
+        enigma = load_enigma_from_path(config_file)
+        out_file = open(output_file, 'w') if output_file != sys.stdout else sys.stdout
+        with open(input_file, 'r') as in_file:
+            for line in in_file:
+                out_file.write(enigma.encrypt(line))
+        if output_file != sys.stdout:
+            out_file.close()
+    except (JSONFileException, IndexError, KeyError, OSError):
+        print("The enigma script has encountered an error")
+        exit(1)
