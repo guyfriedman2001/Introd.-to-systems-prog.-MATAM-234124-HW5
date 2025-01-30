@@ -1,3 +1,6 @@
+import json
+import sys
+
 ALPHABET_SIZE = 26
 WHEEL1_CYCLE_LIMIT = 8
 
@@ -95,8 +98,16 @@ class Enigma:
 
 
 
-    def load_enigma_from_path(path):
-        pass
+def load_enigma_from_path(path):
+    try:
+        with open(path, 'r') as file:
+            loaded_data = json.load(file)
+            hash_map = loaded_data["hash_map"]
+            wheels = loaded_data["wheels"]
+            reflector_map = loaded_data["reflector_map"]
+            return Enigma(hash_map, wheels, reflector_map)
+    except (KeyError, OSError, json.JSONDecodeError, FileNotFoundError):
+        raise JSONFileException()
 
 class JSONFileException(Exception):
     def __init__(self, message):
