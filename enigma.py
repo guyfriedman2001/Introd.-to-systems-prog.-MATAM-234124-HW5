@@ -112,7 +112,7 @@ def load_enigma_from_path(path : str) -> Enigma:
 class JSONFileException(Exception):
     """Exception raised for errors in JSON file loading."""
     def __init__(self):
-        super().__init__("The enigma script has encountered an error")
+        self.message = "The enigma script has encountered an error"
 
 if __name__ == "__main__":
     """Handles command-line arguments and runs the Enigma encryption process."""
