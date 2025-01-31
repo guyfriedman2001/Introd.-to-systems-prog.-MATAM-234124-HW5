@@ -17,12 +17,24 @@ STATE2_WHEEL3 = 5
 PLUS_OPERATION = 1
 MINUS_OPERATION = -1
 
-def is_even(number : int) -> bool: """Checks if a number is even.""" return number % 2 == 0
-def is_odd(number : int) -> bool: """Checks if a number is odd.""" return not is_even(number)
-def is_zero(number : int) -> bool: """Checks if a number is zero.""" return number == 0
-def make_double(number : int) -> int: """Returns twice the given number.""" return number * 2
-def increment(number : int) -> int: """Increments the given number by one.""" return number + 1
-def decrement(number : int) -> int: """Decrements the given number by one.""" return number - 1
+def is_even(number : int) -> bool: 
+    """Checks if a number is even.""" 
+    return number % 2 == 0
+def is_odd(number : int) -> bool: 
+    """Checks if a number is odd.""" 
+    return not is_even(number)
+def is_zero(number : int) -> bool:
+    """Checks if a number is zero.""" 
+    return number == 0
+def make_double(number : int) -> int: 
+    """Returns twice the given number.""" 
+    return number * 2
+def increment(number : int) -> int: 
+    """Increments the given number by one.""" 
+    return number + 1
+def decrement(number : int) -> int: 
+    """Decrements the given number by one.""" 
+    return number - 1
 
 class Enigma:
     def __init__(self, hash_map : dict, wheels : list, reflector_map : dict):
@@ -38,7 +50,9 @@ class Enigma:
         pass
 
     @staticmethod
-    def next_val_wheel1(current_value : int) -> int: """Calculates the next position of wheel 1.""" return increment((current_value % WHEEL1_CYCLE_LIMIT))
+    def next_val_wheel1(current_value : int) -> int: 
+        """Calculates the next position of wheel 1.""" 
+        return increment((current_value % WHEEL1_CYCLE_LIMIT))
 
     @staticmethod
     def next_val_wheel2(current_value : int, encrypted_characters_counter : int) -> int:
@@ -63,9 +77,13 @@ class Enigma:
         self.wheel2 = self.next_val_wheel2(self.wheel2,encrypted_characters_counter)
         self.wheel3 = self.next_val_wheel3(encrypted_characters_counter)
 
-    def calculate_special_formula(self) -> int: """Computes a transformation value used in the encryption process.""" return (((make_double(self.wheel1))-self.wheel2+self.wheel3)%ALPHABET_SIZE)
+    def calculate_special_formula(self) -> int: 
+        """Computes a transformation value used in the encryption process.""" 
+        return (((make_double(self.wheel1))-self.wheel2+self.wheel3)%ALPHABET_SIZE)
 
-    def special_formula_condition(self) -> bool: """Checks whether the special formula yields a nonzero result.""" return not is_zero(self.calculate_special_formula())
+    def special_formula_condition(self) -> bool: 
+        """Checks whether the special formula yields a nonzero result.""" 
+        return not is_zero(self.calculate_special_formula())
         
     def reset_wheels(self) -> None:
         """Resets the wheels to their initial states."""
