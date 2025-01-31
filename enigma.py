@@ -25,7 +25,7 @@ def increment(number : int) -> int: return number + 1
 def decrement(number : int) -> int: return number - 1
 
 class Enigma:
-    def __init__(self, hash_map, wheels, reflector_map):
+    def __init__(self, hash_map : dict, wheels : list, reflector_map : dict):
         self.hash_map = hash_map
         self.wheel1 = wheels[WHEEL1_POSITION]
         self.wheel2 = wheels[WHEEL2_POSITION]
@@ -68,7 +68,7 @@ class Enigma:
         self.wheel2 = self._original_state_wheel2
         self.wheel3 = self._original_state_wheel3
 
-    def cycle(self, char, operation) -> str:
+    def cycle(self, char : str, operation : int) -> str:
         i = self.hash_map[char]
         temp_calculation = self.calculate_special_formula()
         i += temp_calculation*operation if temp_calculation != 0 else operation
@@ -90,7 +90,7 @@ class Enigma:
         self.reset_wheels()
         return encrypted_message
 
-def load_enigma_from_path(path):
+def load_enigma_from_path(path : str) -> Enigma:
     try:
         with open(path, 'r') as file:
             loaded_data = json.load(file)
